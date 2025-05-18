@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Architecture d'Étage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .controls button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .controls button:hover {
+            background-color: #45a049;
+        }
+        .plan-container {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border: 1px solid #333;
+        }
+        .dimensions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plan Architecture d'Étage</h1>
+        <div class="dimensions">
+            <p><strong>Dimensions:</strong> 9m × 48m</p>
+            <p><strong>Échelle:</strong> <span id="scale">1:100</span></p>
+        </div>
+        <div class="controls">
+            <button id="toggleBureaux">Afficher/Masquer Bureaux</button>
+            <button id="toggleCouloir">Afficher/Masquer Couloir</button>
+            <button id="toggleEntrees">Afficher/Masquer Entrées</button>
+            <button id="toggleEscaliers">Afficher/Masquer Escaliers</button>
+            <button id="toggleAscenseurs">Afficher/Masquer Ascenseurs</button>
+            <button id="toggleMesures">Afficher/Masquer Mesures</button>
+        </div>
+        <div class="plan-container">
+            <svg id="plan" viewBox="0 0 180 960" width="360" height="960">
+                <!-- Le plan principal -->
+                <rect x="0" y="0" width="180" height="960" fill="none" stroke="#000" stroke-width="2" />
+                
+                <!-- Les 8 bureaux -->
+                <g id="bureaux">
+                    <rect x="5" y="5" width="140" height="115" fill="#e6f7ff" stroke="#0099cc" stroke-width="1" class="bureau" data-num="1" />
+                    <rect x="5" y="125" width="140" height="115" fill="#e6f7ff" stroke="#0099cc" stroke-width="1" class="bureau" data-num="2" />
+                    <rect x="5" y="245" width="140" height="115" fill="#e6f7ff" stroke="#0099cc" stroke-width="1" class="bureau" data-num="3" />
+                    <rect x="5" y="365" width="140" height="115" fill="#e6f7ff" stroke="#0099cc" stroke-width="1" class="bureau" data-num="4" />
+                    <rect x="5" y="485" width="140" height="115" fill="#e6f7ff" stroke="#0099cc" stroke-width="1" class="bureau" data-num="5" />
+                    <rect x="5" y="605" width="140" height="115" fill="#e6f7ff" stroke="#0099cc" stroke-width="1" class="bureau" data-num="6" />
+                    <rect x="5" y="725" width="140" height="115" fill="#e6f7ff" stroke="#0099cc" stroke-width="1" class="bureau" data-num="7" />
+                    <rect x="5" y="845" width="140" height="110" fill="#e6f7ff" stroke="#0099cc" stroke-width="1" class="bureau" data-num="8" />
+                    
+                    <!-- Fenêtres sur la façade principale (gauche) -->
+                    <!-- Bureau 1 -->
+                    <rect x="0" y="30" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <rect x="0" y="70" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 2 -->
+                    <rect x="0" y="150" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <rect x="0" y="190" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 3 -->
+                    <rect x="0" y="270" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <rect x="0" y="310" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 4 -->
+                    <rect x="0" y="390" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <rect x="0" y="430" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 5 -->
+                    <rect x="0" y="510" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <rect x="0" y="550" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 6 -->
+                    <rect x="0" y="630" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <rect x="0" y="670" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 7 -->
+                    <rect x="0" y="750" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <rect x="0" y="790" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 8 -->
+                    <rect x="0" y="870" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    <rect x="0" y="910" width="5" height="20" fill="#b3e0ff" stroke="#0099cc" stroke-width="1" />
+                    
+                    <!-- Portes donnant sur le couloir -->
+                    <!-- Bureau 1 -->
+                    <rect x="145" y="50" width="0" height="25" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <path d="M 145,50 Q 160,62.5 145,75" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 2 -->
+                    <rect x="145" y="170" width="0" height="25" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <path d="M 145,170 Q 160,182.5 145,195" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 3 -->
+                    <rect x="145" y="290" width="0" height="25" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <path d="M 145,290 Q 160,302.5 145,315" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 4 -->
+                    <rect x="145" y="410" width="0" height="25" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <path d="M 145,410 Q 160,422.5 145,435" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 5 -->
+                    <rect x="145" y="530" width="0" height="25" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <path d="M 145,530 Q 160,542.5 145,555" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 6 -->
+                    <rect x="145" y="650" width="0" height="25" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <path d="M 145,650 Q 160,662.5 145,675" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 7 -->
+                    <rect x="145" y="770" width="0" height="25" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <path d="M 145,770 Q 160,782.5 145,795" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <!-- Bureau 8 -->
+                    <rect x="145" y="890" width="0" height="25" fill="none" stroke="#0099cc" stroke-width="1" />
+                    <path d="M 145,890 Q 160,902.5 145,915" fill="none" stroke="#0099cc" stroke-width="1" />
+                    
+                    <!-- Numéros des bureaux -->
+                    <text x="75" y="62.5" text-anchor="middle" font-size="14" font-weight="bold">Bureau 1</text>
+                    <text x="75" y="182.5" text-anchor="middle" font-size="14" font-weight="bold">Bureau 2</text>
+                    <text x="75" y="302.5" text-anchor="middle" font-size="14" font-weight="bold">Bureau 3</text>
+                    <text x="75" y="422.5" text-anchor="middle" font-size="14" font-weight="bold">Bureau 4</text>
+                    <text x="75" y="542.5" text-anchor="middle" font-size="14" font-weight="bold">Bureau 5</text>
+                    <text x="75" y="662.5" text-anchor="middle" font-size="14" font-weight="bold">Bureau 6</text>
+                    <text x="75" y="782.5" text-anchor="middle" font-size="14" font-weight="bold">Bureau 7</text>
+                    <text x="75" y="900" text-anchor="middle" font-size="14" font-weight="bold">Bureau 8</text>
+                </g>
+                
+                <!-- Le couloir -->
+                <g id="couloir">
+                    <rect x="145" y="0" width="35" height="960" fill="#f0f0f0" stroke="#999" stroke-width="1" />
+                    <text x="162" y="480" text-anchor="middle" font-size="14" font-weight="bold" transform="rotate(90, 162, 480)">Couloir</text>
+                </g>
+                
+                <!-- Mesures des bureaux (invisible par défaut) -->
+                <g id="mesures-bureaux" style="display: none;">
+                    <text x="75" y="85" text-anchor="middle" font-size="10">7m × 5.75m</text>
+                    <text x="75" y="205" text-anchor="middle" font-size="10">7m × 5.75m</text>
+                    <text x="75" y="325" text-anchor="middle" font-size="10">7m × 5.75m</text>
+                    <text x="75" y="445" text-anchor="middle" font-size="10">7m × 5.75m</text>
+                    <text x="75" y="565" text-anchor="middle" font-size="10">7m × 5.75m</text>
+                    <text x="75" y="685" text-anchor="middle" font-size="10">7m × 5.75m</text>
+                    <text x="75" y="805" text-anchor="middle" font-size="10">7m × 5.75m</text>
+                    <text x="75" y="925" text-anchor="middle" font-size="10">7m × 5.5m</text>
+                </g>
+                
+                <!-- Les entrées -->
+                <g id="entrees">
+                    <!-- Entrée façade bas (petite) - déplacée vers le début du couloir -->
+                    <rect x="145" y="958" width="15" height="2" fill="#8bc34a" stroke="#333" stroke-width="2" />
+                    <text x="145" y="945" text-anchor="middle" font-size="12">Entrée 1</text>
+                    
+                    <!-- Entrée façade gauche (principale) -->
+                    <rect x="0" y="480" width="2" height="15" fill="#8bc34a" stroke="#333" stroke-width="2" />
+                    <text x="25" y="488" text-anchor="start" font-size="12">Entrée 2</text>
+                </g>
+                
+                <!-- Les escaliers repositionnés près de l'entrée 2 (façade principale gauche) -->
+                <g id="escaliers">
+                    <!-- Escalier 1 -->
+                    <rect x="20" y="450" width="25" height="25" fill="#ff9800" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="455" x2="45" y2="455" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="460" x2="45" y2="460" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="465" x2="45" y2="465" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="470" x2="45" y2="470" stroke="#333" stroke-width="1" />
+                    <text x="23" y="440" text-anchor="start" font-size="12">Escalier 1</text>
+                    
+                    <!-- Escalier 2 -->
+                    <rect x="20" y="505" width="25" height="25" fill="#ff9800" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="510" x2="45" y2="510" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="515" x2="45" y2="515" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="520" x2="45" y2="520" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="525" x2="45" y2="525" stroke="#333" stroke-width="1" />
+                    <text x="23" y="540" text-anchor="start" font-size="12">Escalier 2</text>
+                </g>
+                
+                <!-- Les ascenseurs repositionnés près de l'entrée 2 (façade principale gauche) -->
+                <g id="ascenseurs">
+                    <!-- Ascenseur 1 -->
+                    <rect x="20" y="400" width="25" height="20" fill="#f44336" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="410" x2="45" y2="410" stroke="#fff" stroke-width="1" />
+                    <text x="23" y="390" text-anchor="start" font-size="12">Ascenseur 1</text>
+                    
+                    <!-- Ascenseur 2 -->
+                    <rect x="20" y="560" width="25" height="20" fill="#f44336" stroke="#333" stroke-width="1" />
+                    <line x1="20" y1="570" x2="45" y2="570" stroke="#fff" stroke-width="1" />
+                    <text x="23" y="590" text-anchor="start" font-size="12">Ascenseur 2</text>
+                </g>
+                
+                <!-- Dimensions -->
+                <g id="dimensions" stroke="#666" stroke-width="1">
+                    <!-- Longueur (maintenant hauteur) -->
+                    <line x1="-10" y1="0" x2="-10" y2="960" stroke-dasharray="5,5" />
+                    <text x="-20" y="480" text-anchor="middle" font-size="12" transform="rotate(-90, -20, 480)">48m</text>
+                    
+                    <!-- Largeur (maintenant largeur) -->
+                    <line x1="0" y1="-10" x2="180" y2="-10" stroke-dasharray="5,5" />
+                    <text x="90" y="-15" text-anchor="middle" font-size="12">9m</text>
+                </g>
+                
+                <!-- Façades -->
+                <g id="facades">
+                    <line x1="0" y1="0" x2="0" y2="960" stroke="#f00" stroke-width="3" />
+                    <line x1="0" y1="960" x2="180" y2="960" stroke="#f00" stroke-width="3" />
+                    <text x="10" y="480" text-anchor="middle" font-size="10" fill="#f00" transform="rotate(90, 10, 480)">Façade principale (48m)</text>
+                    <text x="90" y="955" text-anchor="middle" font-size="10" fill="#f00">Façade secondaire (9m)</text>
+                </g>
+            </svg>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #e6f7ff;"></div>
+                <span>Bureaux</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #f0f0f0;"></div>
+                <span>Couloir</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #8bc34a;"></div>
+                <span>Entrées</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #ff9800;"></div>
+                <span>Escaliers</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #f44336;"></div>
+                <span>Ascenseurs</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: white; border-color: #f00;"></div>
+                <span>Façades</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: white; text-align: center;">ABC</div>
+                <span>Mesures</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #b3e0ff;"></div>
+                <span>Fenêtres</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="display: flex; justify-content: center;">
+                    <svg width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M 0,0 Q 15,10 0,20" fill="none" stroke="#0099cc" stroke-width="1" />
+                    </svg>
+                </div>
+                <span>Portes</span>
+            </div>
+        </div>
+        
+        <div class="info">
+            <p><strong>Spécifications du plan:</strong></p>
+            <ul>
+                <li>Terrain rectangulaire: 9m × 48m</li>
+                <li>Deux façades:
+                    <ul>
+                        <li>Façade principale (gauche): 48m</li>
+                        <li>Façade secondaire (bas): 9m</li>
+                    </ul>
+                </li>
+                <li>8 plateaux bureaux</li>
+                <li>Un couloir sur le côté sans façade ouverte</li>
+                <li>Deux entrées:
+                    <ul>
+                        <li>Entrée 1: sur la façade secondaire (bas), au début du couloir</li>
+                        <li>Entrée 2: sur la façade principale (gauche)</li>
+                    </ul>
+                </li>
+                <li>Deux escaliers et deux ascenseurs positionnés près de l'entrée 2</li>
+                <li>Chaque bureau dispose de:
+                    <ul>
+                        <li>Deux fenêtres sur la façade principale</li>
+                        <li>Une porte d'accès au couloir</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Éléments du plan
+            const bureaux = document.getElementById('bureaux');
+            const couloir = document.getElementById('couloir');
+            const entrees = document.getElementById('entrees');
+            const escaliers = document.getElementById('escaliers');
+            const ascenseurs = document.getElementById('ascenseurs');
+            const mesuresBureaux = document.getElementById('mesures-bureaux');
+            
+            // Boutons de contrôle
+            const toggleBureaux = document.getElementById('toggleBureaux');
+            const toggleCouloir = document.getElementById('toggleCouloir');
+            const toggleEntrees = document.getElementById('toggleEntrees');
+            const toggleEscaliers = document.getElementById('toggleEscaliers');
+            const toggleAscenseurs = document.getElementById('toggleAscenseurs');
+            const toggleMesures = document.getElementById('toggleMesures');
+            
+            // Fonction pour basculer la visibilité
+            function toggleVisibility(element) {
+                if (element.style.display === 'none') {
+                    element.style.display = '';
+                } else {
+                    element.style.display = 'none';
+                }
+            }
+            
+            // Événements des boutons
+            toggleBureaux.addEventListener('click', function() {
+                toggleVisibility(bureaux);
+            });
+            
+            toggleCouloir.addEventListener('click', function() {
+                toggleVisibility(couloir);
+            });
+            
+            toggleEntrees.addEventListener('click', function() {
+                toggleVisibility(entrees);
+            });
+            
+            toggleEscaliers.addEventListener('click', function() {
+                toggleVisibility(escaliers);
+            });
+            
+            toggleAscenseurs.addEventListener('click', function() {
+                toggleVisibility(ascenseurs);
+            });
+            
+            toggleMesures.addEventListener('click', function() {
+                toggleVisibility(mesuresBureaux);
+            });
+            
+            // Ajouter une interaction pour les bureaux
+            const bureauElements = document.querySelectorAll('.bureau');
+            bureauElements.forEach(bureau => {
+                bureau.addEventListener('mouseover', function() {
+                    this.setAttribute('fill', '#b3e0ff');
+                });
+                
+                bureau.addEventListener('mouseout', function() {
+                    this.setAttribute('fill', '#e6f7ff');
+                });
+                
+                bureau.addEventListener('click', function() {
+                    const num = this.getAttribute('data-num');
+                    alert('Vous avez sélectionné le Bureau ' + num);
+                });
+            });
+            
+            // Ajouter une interaction pour les fenêtres
+            const fenetres = document.querySelectorAll('rect[fill="#b3e0ff"]');
+            fenetres.forEach(fenetre => {
+                fenetre.addEventListener('mouseover', function() {
+                    this.setAttribute('fill', '#80ccff');
+                });
+                
+                fenetre.addEventListener('mouseout', function() {
+                    this.setAttribute('fill', '#b3e0ff');
+                });
+                
+                fenetre.addEventListener('click', function() {
+                    const y = parseFloat(this.getAttribute('y'));
+                    let bureau = Math.floor(y / 120) + 1;
+                    if (bureau > 8) bureau = 8; // Ajustement pour le dernier bureau qui a une hauteur différente
+                    alert('Fenêtre du Bureau ' + bureau);
+                });
+            });
+            
+            // Ajouter une interaction pour les portes
+            const portes = document.querySelectorAll('path[d^="M 145"]');
+            portes.forEach(porte => {
+                porte.addEventListener('mouseover', function() {
+                    this.setAttribute('stroke', '#0066cc');
+                    this.setAttribute('stroke-width', '2');
+                });
+                
+                porte.addEventListener('mouseout', function() {
+                    this.setAttribute('stroke', '#0099cc');
+                    this.setAttribute('stroke-width', '1');
+                });
+                
+                porte.addEventListener('click', function() {
+                    const y = parseFloat(this.getAttribute('d').split(',')[1]);
+                    let bureau = Math.floor(y / 120) + 1;
+                    if (bureau > 8) bureau = 8; // Ajustement pour le dernier bureau qui a une hauteur différente
+                    alert('Porte du Bureau ' + bureau);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
